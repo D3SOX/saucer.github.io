@@ -24,12 +24,12 @@
     
     <script>(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="/resources/css/retype.css?v=1.11.2.699213089741" rel="stylesheet" data-turbo-track="reload" />
+    <link href="/resources/css/retype.css?v=1.11.2.699213820749" rel="stylesheet" data-turbo-track="reload" />
 
-    <script type="text/javascript" src="/resources/js/config.js?v=1.11.2.699213089741" defer data-turbo-track="reload"></script>
+    <script type="text/javascript" src="/resources/js/config.js?v=1.11.2.699213820749" defer data-turbo-track="reload"></script>
     <script type="text/javascript" src="/resources/js/retype.js?v=1.11.2" defer data-turbo-track="reload"></script>
-    <script id="lunr-js" type="text/javascript" src="/resources/js/lunr.js?v=1.11.2.699213089741" defer></script>
-    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.11.2.699213089741" defer></script>
+    <script id="lunr-js" type="text/javascript" src="/resources/js/lunr.js?v=1.11.2.699213820749" defer></script>
+    <script id="prism-js" type="text/javascript" src="/resources/js/prism.js?v=1.11.2.699213820749" defer></script>
 </head>
     <body>
         <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -255,16 +255,21 @@ smartview.expose(&quot;synced_int&quot;, synced_int);</code></pre>
 </doc-anchor-target>
 <p>Exposing functions is as easy as calling the <code v-pre>expose</code> function and giving it a <kbd>name</kbd> and a <kbd>function</kbd>.</p>
 <div class="mb-6 overflow-hidden border rounded-md docs-columns dark:border-dark-650" style="grid-template-columns: repeat(1, minmax(0, 1fr));">
-    <div class="flex items-center px-5 py-3 font-mono leading-snug text-white docs-columns-code-title">
+    <div class="flex items-center px-5 py-3 font-medium leading-snug text-gray-900 border-b border-gray-200 dark:border-dark-650 dark:text-white">
         <span>Example</span>
     </div>
-    <div class="docs-columns-code docs-columns-content">
+    <div class="px-5 py-3 docs-columns-content">
 <div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">C++</div>
 <pre class="language-cpp"><code v-pre class="language-cpp">smartview.expose(&quot;test_function&quot;, [](const std::string&amp; some_string, int some_int)
 {
     std::cout &lt;&lt; &quot;Got&quot; &lt;&lt; some_string &lt;&lt; std::endl;
     return some_int * 20 + 5;
 });</code></pre>
+</doc-codeblock></div>
+<div class="codeblock-wrapper"><doc-codeblock>
+<div class="codeblock-title">JavaScript</div>
+<pre class="language-javascript"><code v-pre class="language-javascript">console.log(await window.saucer.call(&quot;test_function&quot;, [&quot;Test&quot;, 10])); // -&gt; Will print 205</code></pre>
 </doc-codeblock></div>
     </div>
 </div>
@@ -368,6 +373,25 @@ The proxy will detect any changes when it is destructed.</p>
 
 a_vector.assign(std::vector&lt;int&gt;{});
 std::vector&lt;int&gt; a_copy = a_vector.read();</code></pre>
+</doc-codeblock></div>
+    </div>
+</div>
+<doc-anchor-target id="evaluating-javascript">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#evaluating-javascript">#</doc-anchor-trigger>
+        <span>Evaluating JavaScript</span>
+    </h2>
+</doc-anchor-target>
+<p>You can also evaluate JavaScript code and capture its result.
+To do so call the <code v-pre>eval</code> function.</p>
+<div class="mb-6 overflow-hidden border rounded-md docs-columns dark:border-dark-650" style="grid-template-columns: repeat(1, minmax(0, 1fr));">
+    <div class="flex items-center px-5 py-3 font-mono leading-snug text-white docs-columns-code-title">
+        <span>Example</span>
+    </div>
+    <div class="docs-columns-code docs-columns-content">
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-cpp"><code v-pre class="language-cpp"> smartview.eval&lt;float&gt;(&quot;Math.random()&quot;)-&gt;then([](float result) { std::cout &lt;&lt; &quot;Random: &quot; &lt;&lt; result &lt;&lt; std::endl; });
+ smartview.eval&lt;int&gt;(&quot;Math.pow({},{})&quot;, 5, 2)-&gt;then([](int result) { std::cout &lt;&lt; &quot;Pow(5,2): &quot; &lt;&lt; result &lt;&lt; std::endl; });</code></pre>
 </doc-codeblock></div>
     </div>
 </div>
